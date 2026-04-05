@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadi Bhai's Debt Tracker</title>
+    <style>
+        :root {
+            --primary-red: #ff4d4d;
+            /* Changed to solid black */
+            --overlay: #000000; 
+            /* Changed to a solid, non-transparent dark grey */
+            --card-bg: #222222; 
+            --text-white: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Removing the image URL and using solid color */
+            background-color: var(--overlay);
+            color: var(--text-white);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            border: 1px solid #333; /* Solid border instead of transparent */
+            /* backdrop-filter removed as it's no longer needed for a solid card */
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: #ddd;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .amount-container {
+            margin: 1.5rem 0;
+        }
+
+        .amount {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--primary-red);
+            line-height: 1;
+            text-shadow: 2px 2px 10px rgba(255, 77, 77, 0.3);
+        }
+
+        .currency {
+            font-size: 1.2rem;
+            color: #aaa;
+            display: block;
+            margin-top: 5px;
+        }
+
+        .message {
+            font-style: italic;
+            margin-bottom: 2rem;
+            color: #ccc;
+            font-size: 1.1rem;
+        }
+
+        .deadline-box {
+            background: #111; /* Solid dark background for the box */
+            padding: 1.2rem;
+            border-radius: 12px;
+            border: 1px solid var(--primary-red);
+        }
+
+        .deadline-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+            color: #ff9f9f;
+        }
+
+        #countdown {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #00ffcc;
+            letter-spacing: 1px;
+        }
+
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #777;
+            border-top: 1px solid #444;
+            padding-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Official Debt Notice</h1>
+        <div class="amount-container">
+            <span class="amount">500</span>
+            <span class="currency">BANGLADESHI TAKA</span>
+        </div>
+        
+        <p class="message">"Hadi Bhai, 10 tarikh er moddhe taka ta diye diyen!"</p>
+
+        <div class="deadline-box">
+            <div class="deadline-label">Countdown to Deadline</div>
+            <div id="countdown">00d : 00h : 00m : 00s</div>
+        </div>
+
+        <div class="footer">Deadline: The 10th Day of the Month</div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const now = new Date();
+            let year = now.getFullYear();
+            let month = now.getMonth();
+            
+            let deadline = new Date(year, month, 10, 23, 59, 59);
+
+            if (now > deadline) {
+                deadline = new Date(year, month + 1, 10, 23, 59, 59);
+            }
+
+            const diff = deadline - now;
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const d = days.toString().padStart(2, '0');
+            const h = hours.toString().padStart(2, '0');
+            const m = minutes.toString().padStart(2, '0');
+            const s = seconds.toString().padStart(2, '0');
+
+            document.getElementById("countdown").innerHTML = 
+                `${d}d : ${h}h : ${m}m : ${s}s`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
